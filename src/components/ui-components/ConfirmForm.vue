@@ -1,4 +1,4 @@
 <template lang="html">
-  <v-main> </v-main>
+  <div></div>
 </template>
 <script lang="ts" setup></script>
