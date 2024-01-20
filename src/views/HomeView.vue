@@ -1,9 +1,9 @@
 <template>
-  <hello-world />
+  <home-view />
 </template>
 
 <script lang="ts" setup>
 // Components
-import HelloWorld from '../components/HelloWorld.vue';
+import HomeView from '../components/HomeView.vue';
 
 </script>
