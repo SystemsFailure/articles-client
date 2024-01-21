@@ -1,3 +1,4 @@
+import { useStore } from "@/store/index";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ArticlesViewVue from "@/views/ArticlesView.vue";
@@ -35,10 +36,50 @@ const routes: Array<RouteRecordRaw> = [
     component: RecoverPasswordVue,
   },
 ];
+// list exceptions for meta field of requiredAuth
+const exceptions: Array<{ path: string; name: string }> = [
+  {
+    path: "/auth",
+    name: "auth",
+  },
+  {
+    path: "/recover-password",
+    name: "recover-password",
+  },
+  {
+    path: "/about",
+    name: "about",
+  },
+];
+
+routes.forEach((route) => {
+  // Add new meta field - requiresAuth: false, but to excepting all routes from exceptions
+  route.meta = {};
+  route.meta = Object.assign(route.meta, { requiresAuth: null });
+  if (
+    exceptions.some(
+      (exception) =>
+        exception.path === route.path && exception.name === route.name
+    )
+  ) {
+    route.meta.requiresAuth = false;
+  } else {
+    route.meta.requiresAuth = route.meta.requiresAuth ?? true;
+  }
+});
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+router.beforeEach((to, _, next) => {
+  const store = useStore();
+  if (to.meta.requiresAuth && !store.auth) {
+    // Check if user is logged in or not logged
+    next("/auth"); // redirect to login page
+  } else {
+    next(); // Continue navigation
+  }
 });
 
 export default router;

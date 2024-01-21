@@ -103,4 +103,13 @@ function clear(): void {
     state[key as keyof State] = value;
   }
 }
+
+// import { useTheme } from 'vuetify'
+// import { onMounted } from "vue";
+
+// const theme = useTheme()
+
+// function toggleTheme () {
+//   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+// }
 </script>
