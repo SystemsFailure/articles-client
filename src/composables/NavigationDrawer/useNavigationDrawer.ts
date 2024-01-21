@@ -14,8 +14,6 @@ export interface UserDTO {
 }
 
 export function useNavigationDrawer() {
-  const valueRef_userName: Ref<string> = ref("");
-
   const object_user_data_template: Ref<UserDTO> = ref({
     icon_link: "https://randomuser.me/api/portraits/women/85.jpg",
     title: "Sandra Adams",

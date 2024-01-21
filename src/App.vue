@@ -7,6 +7,8 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from "vue";
+
 // import { AxiosInstance } from 'axios';
 // import { inject, onMounted } from 'vue';
 // import moment from 'moment';
@@ -24,6 +26,10 @@
 // })
 // })
 // })
+
+onMounted(() => {
+  console.log(process.env.NODE_ENV);
+});
 </script>
 
 <style lang="css">
