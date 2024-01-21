@@ -90,17 +90,17 @@
   </v-container>
 </template>
 <script lang="ts" setup>
-import { ref, Ref } from 'vue'
+import { ref, Ref } from "vue";
 const loading: Ref<boolean> = ref<boolean>(true);
-import { useAuth, State }  from '@/composables/AuthView/useAuth'
+import { useAuth, State } from "@/composables/AuthView/useAuth";
 
-const { state, v$, items, initialState } = useAuth()
+const { state, v$, items, initialState } = useAuth();
 
-function clear() : void {
-    v$.value.$reset();
-    
-    for (const [key, value] of Object.entries(initialState)) {
-        state[key as keyof State] = value;
-    }
+function clear(): void {
+  v$.value.$reset();
+
+  for (const [key, value] of Object.entries(initialState)) {
+    state[key as keyof State] = value;
+  }
 }
 </script>

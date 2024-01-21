@@ -100,14 +100,14 @@
   </v-container>
 </template>
 <script lang="ts" setup>
-import { useAuth, State }  from '@/composables/AuthView/useAuth';
-const { state, v$, items, initialState } = useAuth()
+import { useAuth, State } from "@/composables/AuthView/useAuth";
+const { state, v$, items, initialState } = useAuth();
 
-function clear() : void {
-    v$.value.$reset();
-    
-    for (const [key, value] of Object.entries(initialState)) {
-        state[key as keyof State] = value;
-    }
+function clear(): void {
+  v$.value.$reset();
+
+  for (const [key, value] of Object.entries(initialState)) {
+    state[key as keyof State] = value;
+  }
 }
 </script>
