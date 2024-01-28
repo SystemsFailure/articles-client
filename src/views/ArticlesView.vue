@@ -13,7 +13,6 @@
         <i class="fi fi-ss-bell" style="font-size: 20px;"></i>
       </v-btn>
 
-
       
       <v-menu v-model="languageDrop">
         <template v-slot:activator="{props}">
@@ -23,16 +22,14 @@
         </template>
           <v-list>
             <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            :value="index"
+              v-for="(item, index) in items"
+              :key="index"
+              :value="index"
             >
             <v-list-item-title>{{ item.language }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-
-
 
       <v-menu v-model="menuDrop">
         <template v-slot:activator="{props}">
@@ -51,7 +48,6 @@
         </v-list>
       </v-menu>
     </v-toolbar>
-
 
     <v-container fluid>
 
@@ -76,10 +72,43 @@
 
       <v-divider></v-divider>
 
-      <div class="mt-5 d-flex" style="width: max-content; height: max-content; background-color: red;">
-        
+      <v-container fluid>
+        <div style="height: max-content;" ref="listArticles">
+          <div ref="article" v-for="article of articles" :key="article.id">
+            <v-card variant="outlined">
+              <v-img :src="article.imageURL"></v-img>
+              <div style="display: inline-flex; align-items: center; width: 100%;">
+                <v-card-title>{{ article.title }}</v-card-title>
+                <v-spacer></v-spacer>
+                <v-card-subtitle>{{ article.date }}</v-card-subtitle>
+              </div>
+              <v-card-subtitle>{{ article.author }}</v-card-subtitle>
+              <v-card-text>{{ sliceDefault(article.content, 350) }}</v-card-text>
+              <v-card-subtitle>Related Articles:
+                <ul v-if="article.relatedArticles.length > 0">
+                  <li v-for="relatedArticle of article.relatedArticles" :key="relatedArticle.id">
+                    <a :href="`/articles/${relatedArticle.id}`">{{ relatedArticle.title }}</a>
+                  </li>
+                </ul>
+                <span v-else>Автор не указал ссылки на другие статьи</span>
+              </v-card-subtitle>
 
-      </div>
+              <div style="display: inline-flex; align-items: center; width: 100%;">
+                <v-card-subtitle>Tags: {{ article.tags.join(", ") }}</v-card-subtitle>
+                <v-card-subtitle>Category: {{ article.category }}</v-card-subtitle>
+                <v-card-subtitle>Views: {{ article.views }}</v-card-subtitle>
+                <v-card-subtitle>Likes: {{ article.likes }}</v-card-subtitle>
+                <v-card-subtitle>Comments: {{ article.comments.length }}</v-card-subtitle>
+                <v-spacer></v-spacer>
+                <v-card-actions>
+                  <v-btn>Read More</v-btn>
+                  <v-btn v-if="article.externalLink" :href="article.externalLink">External Link</v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
+          </div>
+        </div>
+      </v-container>
 
     </v-container>
     
@@ -226,14 +255,109 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, Ref, watch } from "vue";
+import { ref, Ref, watch, onMounted } from "vue";
 import NavigationDrawer from "../components/ui-components/NavigationDrawer.vue";
+import {Article} from '@/types/article/article.type'
+import { Comment } from '@/types/comment/comment.type'
+import { sliceDefault } from '@/utils/slice'
+
+const comments: Comment[] = [
+  {
+    id: 1,
+    author: "John",
+    date: "2022-01-01",
+    content: "Great article!",
+    likes: 10,
+    dislikes: 2,
+    articleId: 1,
+    parentId: 0,
+  },
+  {
+    id: 2,
+    author: "Alice",
+    date: "2022-02-15",
+    content: "Nice job!",
+    likes: 5,
+    dislikes: 0,
+    articleId: 1,
+    parentId: 0,
+  },
+  {
+    id: 3,
+    author: "Mark",
+    date: "2022-03-03",
+    content: "I have a question...",
+    likes: 2,
+    dislikes: 1,
+    articleId: 1,
+    parentId: 1,
+  },
+  {
+    id: 4,
+    author: "Sarah",
+    date: "2022-03-10",
+    content: "Interesting perspective.",
+    likes: 8,
+    dislikes: 3,
+    articleId: 2,
+    parentId: 0,
+  },
+  {
+    id: 5,
+    author: "Michael",
+    date: "2022-03-20",
+    content: "I disagree with some points...",
+    likes: 3,
+    dislikes: 7,
+    articleId: 2,
+    parentId: 4,
+  },
+];
+
+const article: Article = {
+  id: 1,
+  title: "Sample Article",
+  author: "John Doe",
+  date: "2022-01-01",
+  content: "Lorem ipsum dolor sit amet...",
+  tags: ["sample", "article"],
+  category: "News",
+  views: 100,
+  likes: 50,
+  comments: comments,
+  relatedArticles: [],
+  imageURL: "https://example.com/image.jpg",
+  isFeatured: true,
+  isPublished: true,
+};
 
 let isActive: Ref<boolean> = ref<boolean>(false);
 
 let newArticles: Ref<boolean> = ref<boolean>(false);
 let oldArticles: Ref<boolean> = ref<boolean>(false);
 let favoriteArticles: Ref<boolean> = ref<boolean>(false);
+let articles: Ref<Article[]> = ref<Article[]>([
+  {
+    id: 1,
+    title: "Article 1",
+    author: "Jane Doe",
+    date: "2022-01-01",
+    content: "This is the content of article 1 lorem ipsum dolor sit amet in the lorem ipsum dolor sit amet in the lorem ips Cum sociis natoque penatibus et magnis dis parturient montes nascetur ridic",
+    tags: ["tag1", "tag2"],
+    category: "News",
+    views: 100,
+    likes: 100,
+    comments: comments,
+    relatedArticles: [],
+    imageURL: "https://example.com/image1.jpg",
+    isFeatured: true,
+    isPublished: true,
+  },
+]);
+
+onMounted(() => {
+  articles.value = articles.value.slice(0, 5);
+})
 
 const items: Ref<Array<{language: string}>> = ref<Array<{language: string}>>( [
   { language: 'Ru' },
