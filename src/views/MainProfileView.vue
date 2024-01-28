@@ -3,9 +3,9 @@
     <v-main>
         <v-container fluid style="height: 100vh;">
             <div style="display: flex;">
-                <v-card variant="tonal" width="50%" height="250" class="py-5 px-5" style="display: flex;">
+                <v-card variant="outlined" width="50%" height="250" class="py-5 px-5" style="display: flex;">
                     <div style="display: flex; width: 20%; height: 100%; align-items: center; justify-content: center;">
-                        <v-avatar size="150" style="border-radius: 50%;" class="ml-10">
+                        <v-avatar size="150" style="border-radius: 50%;" class="ml-5">
                             <v-img
                                 cover
                                 src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
@@ -58,132 +58,47 @@
 
                 <v-card width="40%" height="250" variant="text"></v-card>
             </div>
-            <v-card class="mt-10 py-5 px-5 m-0" width="90%" height="100%">
-                <v-list lines="two">
-                    <v-list-item
-                            v-for="article of listArticles"
-                            :key="article.id"
-                        >
-                        <v-card width="100%" height="180"  class="py-5 px-15 card-article" style="display: flex; flex-direction: column;">
-                            <div style="display: flex; align-items: center; justify-content: space-between;">
-                                <v-text>{{ article.title }}</v-text>
-                                <v-text class="font-weight-light">{{ article.date }}</v-text>
-                            </div>
-                            <v-card-subtitle class="py-0 px-0 m-0 mt-3" style="text-wrap: wrap;">
-                                {{ article.subtitle }}
-                            </v-card-subtitle>
 
-                            <div style="display: flex;" class="mt-7">
-                                <v-badge
-                                    color="success"
-                                    :content="article.category"
-                                    inline
-                                    style="transform: scale(1.1);"
-                                ></v-badge>
-                                <v-badge
-                                    color="info"
-                                    :content="'views - ' + article.views"
-                                    inline
-                                    style="transform: scale(1.1);"
-                                    class="ml-5"
-                                ></v-badge>
-                                <v-badge
-                                    color="info"
-                                    :content="'likes - ' + article.likes"
-                                    inline
-                                    style="transform: scale(1.1);"
-                                    class="ml-5"
-                                ></v-badge>
-                                <v-badge
-                                    class="ml-auto"
-                                    color="info"
-                                    :content="article.mode"
-                                    style="transform: scale(1.1);"
-                                    inline
-                                ></v-badge>
-                            </div>
-                        </v-card>
+            <v-tabs
+                v-model="tab"
+                class="mt-5"
+            >
+                <v-tab value="one">Articles</v-tab>
+                <v-tab value="two">Statistics</v-tab>
+                <v-tab value="three">Questions/Answers</v-tab>
+            </v-tabs>
 
-                </v-list-item>
+            <v-window v-model="tab">
+                <v-window-item value="one">
+                    <ArticlesListComp></ArticlesListComp>
+                </v-window-item>
 
-                    
-                </v-list>
-            </v-card>
+                <v-window-item value="two">
+                Two
+                </v-window-item>
+
+                <v-window-item value="three">
+                Three
+                </v-window-item>
+            </v-window>
+
         </v-container>
     </v-main>
 </template>
 <script lang="ts" setup>
 import NavigationDrawer from '@/components/ui-components/NavigationDrawer.vue';
-import { reactive } from 'vue';
+import ArticlesListComp from '@/components/ui-components/Articles/ArticlesListComp.vue';
+
+import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const $route = useRoute()
 
-const listArticles: Array<any> = reactive<Array<any>>([
-    {
-        id: 0,
-        title: 'Nuclear HydroOxygen',
-        subtitle: 'Short Description - Example:  mer by this sun of mounting barded steedsTo the clouds that am curtaild of our bruised arms hung up for sportion,h\'d his wreaths;I, that am rudely stam, and with victorious wrinkled front;And... by this sun of mounting barded steedsTo the clouds that am curtail\'d of our bruised arms hung up for sportion,h\'d his wreaths;I, that am rudely stamp\'d, and with victorious wrinkled front;And... ',
-        category: 'Mathematical',
-        date: '2021-01-01',
-        mode: 'private',
-        user: {},
-        likes: 21,
-        views: 42,
-        comments: [
-            {
-                id: 0,
-                user: {
-                    id: 0,
-                    name: 'Eric Leonhard',
-                    avatar: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                },
-                content: 'Very good article',
-                date: '2021-01-01',
-            },
-        ],
-        corrections: 3,
-    },
-    {
-        id: 0,
-        title: 'Nuclear HydroOxygen',
-        subtitle: 'Short Description - Example:  mer by this sun of mounting barded steedsTo the clouds that am curtaild of our bruised arms hung up for sportion,h\'d his wreaths;I, that am rudely stam, and with victorious wrinkled front;And... by this sun of mounting barded steedsTo the clouds that am curtail\'d of our bruised arms hung up for sportion,h\'d his wreaths;I, that am rudely stamp\'d, and with victorious wrinkled front;And... ',
-        category: 'Mathematical',
-        date: '2021-01-01',
-        mode: 'private',
-        user: {},
-        likes: 21,
-        views: 42,
-        comments: [
-            {
-                id: 0,
-                user: {
-                    id: 0,
-                    name: 'Eric Leonhard',
-                    avatar: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                },
-                content: 'Very good article',
-                date: '2021-01-01',
-            },
-        ],
-        corrections: 3,
-    },
-])
+const tab = ref(null)
 
 onMounted(() => {
     console.log($route.params.account)
 })
 
 </script>
-
-<style scoped>
-.card-article {
-    border-left: 5px solid #adadad;
-}
-
-.card-article:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-</style>
