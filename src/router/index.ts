@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import ArticlesViewVue from "@/views/ArticlesView.vue";
 import AuthViewVue from "@/views/AuthView.vue";
 import RecoverPasswordVue from "@/views/RecoverPassword.vue";
+import MainProfileViewVue from "@/views/MainProfileView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "recover-password",
     component: RecoverPasswordVue,
   },
+  {
+    path: "/main-profile/:account",
+    name: "main-profile",
+    component: MainProfileViewVue,
+  }
 ];
 // list exceptions for meta field of requiredAuth
 const exceptions: Array<{ path: string; name: string }> = [

@@ -21,7 +21,8 @@ export function useNavigationDrawer() {
   });
 
   const navList: Array<navListType> = [
-    { id: "1", value: "myfiles", title: "My Files", icon: "mdi-folder" },
+    { id: "1", value: "myfiles", title: "Articles", icon: "docs.png" },
+    { id: "1", value: "myfiles", title: "My Articles", icon: "" },
     {
       id: "2",
       value: "shared",
@@ -29,6 +30,9 @@ export function useNavigationDrawer() {
       icon: "mdi-account-multiple",
     },
     { id: "3", value: "starred", title: "Starred", icon: "mdi-star" },
+    { id: "4", value: "trash", title: "Trash", icon: "mdi-trash" },
+    { id: "5", value: "settings", title: "Settings", icon: "mdi-cog" },
+    { id: "5", value: "settings", title: "Super Job", icon: "mdi-cog" },
   ];
 
   return {

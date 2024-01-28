@@ -17,7 +17,6 @@
       nav
     >
       <v-list-item
-        :prepend-icon="it.icon"
         :title="it.title"
         :value="it.value"
       ></v-list-item>
@@ -32,4 +31,3 @@ import {
 
 const { navList, object_user_data_template } = useNavigationDrawer();
 </script>
-<style lang=""></style>
