@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/main-profile/:account",
     name: "main-profile",
     component: MainProfileViewVue,
-  }
+  },
 ];
 // list exceptions for meta field of requiredAuth
 const exceptions: Array<{ path: string; name: string }> = [

@@ -1,0 +1,36 @@
+export type UserProfile = {
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    bio: string;
+    avatarURL: string;
+    websiteURL: string;
+    location: string;
+    profession: string;
+    socialMedia: {
+      twitter?: string;
+      facebook?: string;
+      instagram?: string;
+      linkedin?: string;
+    };
+    articleCount: number;
+    followerCount: number;
+    followingCount: number;
+};
+
+- `id` - номер профиля (автора)
+- `username` - имя пользователя
+- `firstName` - имя
+- `lastName` - фамилия
+- `email` - электронная почта
+- `bio` - краткая информация о себе
+- `avatarURL` - URL-адрес аватара (фотографии профиля)
+- `websiteURL` - URL-адрес веб-сайта
+- `location` - местоположение
+- `profession` - профессия
+- `socialMedia` - объект с информацией о социальных сетях (может содержать поля: Twitter, Facebook, Instagram, LinkedIn)
+- `articleCount` - количество статей, созданных автором
+- `followerCount` - количество подписчиков автора
+- `followingCount` - количество пользователей, на которых подписан автор
