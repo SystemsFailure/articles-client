@@ -1,6 +1,5 @@
 <template lang="html">
   <ToolbarComp :title="'Profile'" :breadcrumbs="['a', 'b']"></ToolbarComp>
-  <navigation-drawer></navigation-drawer>
   <v-main>
     <v-container fluid style="height: 100vh">
       <v-container fluid>
@@ -78,7 +77,6 @@
   </v-main>
 </template>
 <script lang="ts" setup>
-import NavigationDrawer from "@/components/ui-components/NavigationDrawer.vue";
 import ArticlesListComp from "@/components/ui-components/Articles/ArticlesListComp.vue";
 import { UserProfile } from "@/types/user/user-profile.type";
 import { onMounted, ref, Ref } from "vue";

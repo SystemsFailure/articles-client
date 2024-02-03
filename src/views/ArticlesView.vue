@@ -1,6 +1,4 @@
 <template lang="html">
-  <navigation-drawer></navigation-drawer>
-
   <ToolbarComp :title="'All Articles'" :breadcrumbs="['a', 'b']"></ToolbarComp>
 
   <v-container fluid>
@@ -16,11 +14,23 @@
     </div>
 
     <v-divider></v-divider>
-
+    <div
+      class="ml-auto mt-3 d-flex align-items-center"
+      style="justify-content: end"
+    >
+      <v-pagination
+        v-model="meta.page"
+        :length="Math.ceil(articles.length / meta.limit)"
+        :total-visible="4"
+      ></v-pagination>
+    </div>
     <v-container fluid>
       <div style="height: max-content" ref="listArticles">
         <div ref="article" v-for="article of articles" :key="article.id">
-          <item-article :article="article"></item-article>
+          <item-article
+            @go-article-id="goArticleId"
+            :article="article"
+          ></item-article>
         </div>
       </div>
     </v-container>
@@ -150,9 +160,11 @@
 import ItemArticle from "@/components/ui-components/ItemArticle.vue";
 import ToolbarComp from "@/components/ui-components/ToolbarComp.vue";
 import { ref, Ref, watch, onMounted } from "vue";
-import NavigationDrawer from "../components/ui-components/NavigationDrawer.vue";
+import { useRouter } from "vue-router";
 import { Article } from "@/types/article/article.type";
 import { Comment } from "@/types/comment/comment.type";
+
+const router = useRouter();
 
 const comments: Comment[] = [
   {
@@ -262,6 +274,20 @@ watch(
     }
   }
 );
+interface Meta {
+  total: number;
+  limit: number;
+  page: number;
+}
+const meta: Ref<Meta> = ref<Meta>({
+  total: 0,
+  limit: 10,
+  page: 1,
+});
+
+function goArticleId(id: number) {
+  router.push({ name: "article-id", params: { id: id } });
+}
 </script>
 
 <style>

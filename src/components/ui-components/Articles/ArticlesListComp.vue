@@ -32,7 +32,10 @@
         :key="article.id"
         class="mt-5"
       >
-        <item-article :article="article"></item-article>
+        <item-article
+          @go-article-id="goArticleId"
+          :article="article"
+        ></item-article>
       </div>
     </div>
     <div class="text-center mt-3">
@@ -169,6 +172,10 @@ import { Ref, ref } from "vue";
 import { Article } from "@/types/article/article.type";
 import { Comment } from "@/types/comment/comment.type";
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 interface Meta {
   total: number;
   limit: number;
@@ -207,7 +214,7 @@ const comments: Comment[] = [
 
 let articles: Ref<Article[]> = ref<Article[]>([
   {
-    id: 1,
+    id: 2,
     title: "Article 1",
     author: "Jane Doe",
     date: "2022-01-01",
@@ -230,11 +237,8 @@ onMounted(() => {
     articles.value.push({ ...articles.value[0] });
   }
 });
-</script>
 
-<style scoped>
-.card-article:hover {
-  opacity: 0.5;
-  cursor: pointer;
+function goArticleId(id: number) {
+  router.push({ name: "article-id", params: { id: id } });
 }
-</style>
+</script>

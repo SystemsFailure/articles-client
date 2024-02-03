@@ -3,11 +3,13 @@
     <v-main>
       <router-view />
     </v-main>
+    <navigation-drawer></navigation-drawer>
   </v-app>
 </template>
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
+import NavigationDrawer from "@/components/ui-components/NavigationDrawer.vue";
 
 // import { AxiosInstance } from 'axios';
 // import { inject, onMounted } from 'vue';

@@ -22,18 +22,12 @@ export function useNavigationDrawer() {
   });
 
   const navList: Array<navListType> = [
-    { id: "1", value: "myfiles", title: "Articles", icon: "docs.png" },
-    { id: "2", value: "myarhives", title: "My Arhives", icon: "foldes.png" },
-    {
-      id: "3",
-      value: "shared",
-      title: "Shared with me",
-      icon: "date.png",
-    },
-    { id: "4", value: "starred", title: "Starred", icon: "like.png" },
-    { id: "5", value: "trash", title: "Trash", icon: "like.png" },
-    { id: "6", value: "settings", title: "Settings", icon: "settings.png" },
-    { id: "7", value: "settings", title: "Super Job", icon: "agreement.png" },
+    { id: "1", value: "1", title: "Articles", icon: "documents.png" },
+    { id: "2", value: "2", title: "Archives", icon: "archive.png" },
+    { id: "3", value: "3", title: "Favorites", icon: "favorites.png" },
+    { id: "4", value: "4", title: "Trash", icon: "trash.png" },
+    { id: "5", value: "5", title: "Settings", icon: "settings.png" },
+    { id: "6", value: "6", title: "Agreements", icon: "protect.png" },
   ];
 
   return {

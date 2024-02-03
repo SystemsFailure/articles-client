@@ -6,6 +6,7 @@ import AuthViewVue from "@/views/AuthView.vue";
 import RecoverPasswordVue from "@/views/RecoverPassword.vue";
 import MainProfileViewVue from "@/views/MainProfileView.vue";
 import ArhivesViewVue from "@/views/ArhivesView.vue";
+import ArticleIdViewVue from "@/views/ArticleIdView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -46,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/arhives",
     name: "arhives",
     component: ArhivesViewVue,
+  },
+  {
+    path: "/article/:id",
+    name: "article-id",
+    component: ArticleIdViewVue,
   },
 ];
 // list exceptions for meta field of requiredAuth
