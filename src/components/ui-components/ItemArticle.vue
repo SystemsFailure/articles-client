@@ -31,7 +31,7 @@
       <v-card-subtitle>Comments: {{ article.comments.length }}</v-card-subtitle>
       <v-spacer></v-spacer>
       <v-card-actions>
-        <v-btn>Read More</v-btn>
+        <v-btn @click="emit('goArticleId', article.id)">Read More</v-btn>
         <v-btn v-if="article.externalLink" :href="article.externalLink"
           >External Link</v-btn
         >
@@ -41,12 +41,18 @@
 </template>
 <script lang="ts" setup>
 import { sliceDefault } from "@/utils/slice";
-import { defineProps } from "vue";
-
+import { defineProps, defineEmits } from "vue";
+import { Article } from "@/types/article/article.type";
 const props = defineProps({
   article: {
-    type: Object,
+    type: Object as () => Article,
     required: true,
+  },
+});
+
+const emit = defineEmits({
+  goArticleId: (id: number) => {
+    return true;
   },
 });
 </script>
