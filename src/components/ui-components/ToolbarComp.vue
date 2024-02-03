@@ -1,5 +1,11 @@
 <template>
-    <v-toolbar density="compact" style="border-bottom: 1px solid #474747; background-color: rgb(255, 255, 255);">
+  <v-toolbar
+    density="compact"
+    style="
+      border-bottom: 1px solid #474747;
+      background-color: rgb(255, 255, 255);
+    "
+  >
     <v-toolbar-title>{{ props.title }}</v-toolbar-title>
 
     <v-breadcrumbs :items="props.breadcrumbs"></v-breadcrumbs>
@@ -7,7 +13,9 @@
     <v-spacer></v-spacer>
 
     <v-btn icon @click="notificationDialog = true">
-      <i class="fi fi-ss-bell" style="font-size: 20px"></i>
+      <v-badge :content="12" color="red">
+        <i class="fi fi-ss-bell" style="font-size: 20px"></i>
+      </v-badge>
     </v-btn>
 
     <v-menu v-model="languageDrop">
@@ -35,7 +43,9 @@
           :key="index"
           :value="index"
         >
-          <v-list-item-title>{{ item.value }}</v-list-item-title>
+          <v-list-item-title @click="go(item.value)">{{
+            item.value
+          }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -62,7 +72,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, Ref, defineProps, PropType } from "vue";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const items: Ref<Array<{ language: string }>> = ref<
   Array<{ language: string }>
@@ -81,11 +92,23 @@ const menuDrop: Ref<boolean> = ref<boolean>(false);
 const props = defineProps({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   breadcrumbs: {
     type: Array as PropType<any[]>,
-    required: true
-  }
+    required: true,
+  },
 });
+
+function go(value: string) {
+  switch (value) {
+    case "My Profile":
+      router.push({ name: "main-profile", params: { account: "System" } });
+      break;
+    case "Logout":
+      break;
+    default:
+      break;
+  }
+}
 </script>
