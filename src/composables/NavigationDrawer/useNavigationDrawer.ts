@@ -15,24 +15,25 @@ export interface UserDTO {
 
 export function useNavigationDrawer() {
   const object_user_data_template: Ref<UserDTO> = ref({
-    icon_link: "https://firebasestorage.googleapis.com/v0/b/messangercloud.appspot.com/o/01.jpg?alt=media&token=435f5c47-1f5c-4173-931a-b0790cd49745",
+    icon_link:
+      "https://firebasestorage.googleapis.com/v0/b/messangercloud.appspot.com/o/01.jpg?alt=media&token=435f5c47-1f5c-4173-931a-b0790cd49745",
     title: "Eric Leonhard",
     subtitle: "ericleonhard@gmail.com",
   });
 
   const navList: Array<navListType> = [
     { id: "1", value: "myfiles", title: "Articles", icon: "docs.png" },
-    { id: "1", value: "myfiles", title: "My Articles", icon: "foldes.png" },
+    { id: "2", value: "myarhives", title: "My Arhives", icon: "foldes.png" },
     {
-      id: "2",
+      id: "3",
       value: "shared",
       title: "Shared with me",
       icon: "date.png",
     },
-    { id: "3", value: "starred", title: "Starred", icon: "like.png" },
-    { id: "4", value: "trash", title: "Trash", icon: "like.png" },
-    { id: "5", value: "settings", title: "Settings", icon: "settings.png" },
-    { id: "5", value: "settings", title: "Super Job", icon: "agreement.png" },
+    { id: "4", value: "starred", title: "Starred", icon: "like.png" },
+    { id: "5", value: "trash", title: "Trash", icon: "like.png" },
+    { id: "6", value: "settings", title: "Settings", icon: "settings.png" },
+    { id: "7", value: "settings", title: "Super Job", icon: "agreement.png" },
   ];
 
   return {
