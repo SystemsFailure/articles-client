@@ -1,104 +1,120 @@
 <template lang="html">
-    <navigation-drawer></navigation-drawer>
-    <v-main>
-        <v-container fluid style="height: 100vh;">
-            <div style="display: flex;">
-                <v-card variant="outlined" width="50%" height="250" class="py-5 px-5" style="display: flex;">
-                    <div style="display: flex; width: 20%; height: 100%; align-items: center; justify-content: center;">
-                        <v-avatar size="150" style="border-radius: 50%;" class="ml-5">
+  <ToolbarComp :title="'Profile'" :breadcrumbs="['a', 'b']"></ToolbarComp>
+  <navigation-drawer></navigation-drawer>
+  <v-main>
+    <v-container fluid style="height: 100vh">
+        <v-container fluid>
+            <v-card variant="outlined" class="py-5 px-5">
+                <div class="d-flex" style="flex-direction: row; align-items: center;">
+                    <div class="mr-5">
+                        <v-avatar size="150" class="ml-5" :style="{ borderRadius: '50%' }">
                             <v-img
                                 cover
-                                src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-                                style="border-radius: 100px;"
-                            >   
-                                <template v-slot:placeholder>
-                                    <div class="d-flex align-center justify-center fill-height">
-                                        <v-progress-circular
-                                            color="green-lighten-4"
-                                            indeterminate
-                                        ></v-progress-circular>
-                                    </div>
-                                </template>
-                            </v-img>
+                                :src="profile.avatarURL"
+                                :alt="profile.username"
+                                :placeholder="getPlaceholder"
+                            ></v-img>
                         </v-avatar>
                     </div>
+                    <div class="d-flex align-items-center">
+                        <div class="ml-3">
+                            <h1 class="display-1 mb-1">{{ profile.username }}</h1>
+                            <h2 class="headline">{{ profile.profession }}</h2>
+                        </div>
 
-                    <div class="ml-auto">
-                        <v-card-title style="display: flex; flex-direction: column;">
-                            <v-text class="font-weight-light" style="font-size: 18px;">
-                                {{ 'Eric Leonhard' }}
-                            </v-text>
-                            <v-text class="mt-2" style="font-size: 18px;">
-                                <span class="font-weight-light">
-                                    Token - {{ ' SicretblS6X?QN-H=L0EVWzjDc8JId6h9NZ' }}
-                                </span>
-                                <img :src="require('@/assets/icons/fails/copied.png')" width="20" height="20" alt="" class="ml-2">
-                            </v-text>
-                            <v-text class="font-weight-light mt-2" style="font-size: 18px;">
-                                <h6>Country, City</h6> - {{ 'England, London' }}
-                            </v-text>
-                            <div class="mt-10" style="display: flex;">
-                                <div style="display: flex; align-items: center;" class="mr-5">
-                                    <img :src="require('@/assets/icons/fails/views.png')" width="20" alt="">
-                                    <v-text class="font-weight-light ml-2" style="font-size: 14px"> - {{ '12k' }}</v-text>
-                                </div>
-                                <div style="display: flex; align-items: center;" class="mr-5">
-                                    <img :src="require('@/assets/icons/fails/docs.png')" width="20" alt="">
-                                    <v-text class="font-weight-light ml-2" style="font-size: 14px"> - {{ '65' }}</v-text>
-                                </div>
-                                <div style="display: flex; align-items: center;" class="mr-5">
-                                    <img :src="require('@/assets/icons/fails/like.png')" width="20" alt="">
-                                    <v-text class="font-weight-light ml-2" style="font-size: 14px"> - {{ '165K' }}</v-text>
-                                </div>
-                            </div>
-                        </v-card-title>
+                        <div class="ml-15" style="max-width: 350px;">
+                            <h3 class="subtitle-1">About</h3>
+                            <p class="body-2">{{ profile.bio }}</p>
+                        </div>
 
+                        <div class="ml-15">
+                            <h3 class="subtitle-1">Contact</h3>
+                            <p class="body-2">Email: {{ profile.email }}</p>
+                            <p class="body-2">Website: {{ profile.websiteURL }}</p>
+                            <p class="body-2">Location: {{ profile.location }}</p>
+                        </div>
+                    
+                        <div class="ml-15">
+                            <h3 class="subtitle-1">Social Media</h3>
+                            <template v-for="(link, platform) in profile.socialMedia" :key="link">
+                            <p class="body-2">{{ capitalize(platform) }}: {{ link }}</p>
+                            </template>
+                        </div>
+
+                        <div class="ml-15">
+                            <h3 class="subtitle-1">Stats</h3>
+                            <p class="body-2">Articles: {{ profile.articleCount }}</p>
+                            <p class="body-2">Followers: {{ profile.followerCount }}</p>
+                            <p class="body-2">Following: {{ profile.followingCount }}</p>
+                        </div>
                     </div>
-                </v-card>
-
-                <v-card width="40%" height="250" variant="text"></v-card>
-            </div>
-
-            <v-tabs
-                v-model="tab"
-                class="mt-5"
-            >
-                <v-tab value="one">Articles</v-tab>
-                <v-tab value="two">Statistics</v-tab>
-                <v-tab value="three">Questions/Answers</v-tab>
-            </v-tabs>
-
-            <v-window v-model="tab">
-                <v-window-item value="one">
-                    <ArticlesListComp></ArticlesListComp>
-                </v-window-item>
-
-                <v-window-item value="two">
-                Two
-                </v-window-item>
-
-                <v-window-item value="three">
-                Three
-                </v-window-item>
-            </v-window>
-
+                </div>
+            </v-card>
         </v-container>
-    </v-main>
+
+        <v-tabs v-model="tab" class="mt-5 ml-4">
+            <v-tab value="one">Articles</v-tab>
+            <v-tab value="two">Statistics</v-tab>
+            <v-tab value="three">Questions/Answers</v-tab>
+        </v-tabs>
+
+        <v-window v-model="tab">
+            <v-window-item value="one">
+                <ArticlesListComp></ArticlesListComp>
+            </v-window-item>
+
+            <v-window-item value="two"> Two </v-window-item>
+
+            <v-window-item value="three"> Three </v-window-item>
+        </v-window>
+    </v-container>
+  </v-main>
 </template>
 <script lang="ts" setup>
-import NavigationDrawer from '@/components/ui-components/NavigationDrawer.vue';
-import ArticlesListComp from '@/components/ui-components/Articles/ArticlesListComp.vue';
+import NavigationDrawer from "@/components/ui-components/NavigationDrawer.vue";
+import ArticlesListComp from "@/components/ui-components/Articles/ArticlesListComp.vue";
+import { UserProfile } from "@/types/user/user-profile.type";
+import { onMounted, ref, Ref } from "vue";
+import { useRoute } from "vue-router";
+import ToolbarComp from "@/components/ui-components/ToolbarComp.vue";
 
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+const $route = useRoute();
+let profile: Ref<UserProfile> = ref<UserProfile>({
+    id: 1,
+    username: "Eric Leonhard",
+    firstName: "Eric",
+    lastName: "Leonhard",
+    email: "john.doe@example.com",
+    bio: "Software developer passionate about creating innovative solutions. This is the best solution for the world.", 
+    avatarURL: "https://firebasestorage.googleapis.com/v0/b/messangercloud.appspot.com/o/01.jpg?alt=media&token=435f5c47-1f5c-4173-931a-b0790cd49745",
+    websiteURL: "https://example.com",
+    location: "New York, USA",
+    profession: "Software Developer",
+    socialMedia: {
+        twitter: "https://john_doe.com",
+        linkedin: "https:john-doe.facebook.com",
+    },
+    articleCount: 10,
+    followerCount: 1000,
+    followingCount: 500,
+    confirmed: true,
+});
 
-const $route = useRoute()
-
-const tab = ref(null)
+const tab = ref(null);
 
 onMounted(() => {
-    console.log($route.params.account)
-})
+  console.log($route.params.account);
+});
 
+function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getPlaceholder(): string {
+    return `
+    <div class="d-flex align-center justify-center fill-height">
+        <v-progress-circular color="green lighten-4" indeterminate></v-progress-circular>
+    </div>
+    `;
+}
 </script>

@@ -16,10 +16,7 @@
       density="compact"
       nav
     >
-      <v-list-item
-        :title="it.title"
-        :value="it.value"
-      ></v-list-item>
+      <v-list-item :title="it.title" :value="it.value" :prepend-avatar="require(`@/assets/icons/fails/${it.icon}`)"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
